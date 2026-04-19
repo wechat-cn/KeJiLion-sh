@@ -1263,7 +1263,7 @@ add_swap() {
 	# 確保 /swapfile 不再被使用
 	swapoff /swapfile
 
-	# 刪除舊的 /swapfile
+	# 删除旧的 /swapfile
 	rm -f /swapfile
 
 	# 建立新的 swap 分割區
@@ -6154,7 +6154,7 @@ list_tasks() {
 
 # 新增任務
 add_task() {
-	send_stats "新增同步任務"
+	send_stats "添加新同步任务"
 	echo "建立新同步任務範例："
 	echo "- 任務名稱: backup_www"
 	echo "- 本機目錄: /var/www"
@@ -7901,7 +7901,7 @@ linux_ldnmp() {
 	  echo "資料庫名稱:$dbname"
 	  echo "使用者名稱:$dbuse"
 	  echo "密碼:$dbusepasswd"
-	  echo "表前綴: discuz_"
+	  echo "表前缀: discuz_"
 
 
 		;;
@@ -8803,7 +8803,7 @@ while true; do
 
 	  local app_numbers=$([ -f /home/docker/appno.txt ] && cat /home/docker/appno.txt || echo "")
 
-	  # 用循環設定顏色
+	  # 用循环设置颜色
 	  for i in {1..150}; do
 		  if echo "$app_numbers" | grep -q "^$i$"; then
 			  declare "color$i=${gl_lv}"
@@ -12653,8 +12653,8 @@ EOF
 				# 讀取目前的 SSH 連接埠號
 				local current_port=$(grep -E '^ *Port [0-9]+' /etc/ssh/sshd_config | awk '{print $2}')
 
-				# 列印目前的 SSH 連接埠號碼
-				echo -e "目前的 SSH 連接埠號碼是:${gl_huang}$current_port ${gl_bai}"
+				# 打印当前的 SSH 端口号
+				echo -e "当前的 SSH 端口号是:  ${gl_huang}$current_port ${gl_bai}"
 
 				echo "------------------------"
 				echo "連接埠號碼範圍1到65535之間的數字。 （輸入0退出）"
@@ -13216,7 +13216,7 @@ EOF
 
 		  22)
 		  root_use
-		  send_stats "ssh防禦"
+		  send_stats "ssh防御"
 		  while true; do
 
 				check_f2b_status
@@ -13395,7 +13395,7 @@ EOF
 			  echo "TG-bot監控預警功能"
 			  echo "影片介紹: https://youtu.be/vLL-eb3Z_TY"
 			  echo "------------------------------------------------"
-			  echo "您需要設定tg機器人API和接收預警的使用者ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
+			  echo "您需要設定tg機器人API和接收預警的用戶ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
 			  echo "到達閾值後會向用戶發送預警訊息"
 			  echo -e "${gl_hui}-關於流量，重啟伺服器將重新計算-${gl_bai}"
 			  read -e -p "確定繼續嗎？ (Y/N):" choice
@@ -13737,7 +13737,7 @@ linux_file() {
 		echo "15. 刪除文件"
 		echo "------------------------"
 		echo "21. 壓縮檔案目錄 22. 解壓縮檔案目錄 23. 行動檔案目錄 24. 複製檔案目錄"
-		echo "25. 傳文件至其他伺服器"
+		echo "25. 传文件至其他服务器"
 		echo "------------------------"
 		echo "0. 返回上一級選單"
 		echo "------------------------"
@@ -13745,7 +13745,7 @@ linux_file() {
 
 		case "$Limiting" in
 			1)  # 进入目录
-				read -e -p "請輸入目錄名:" dirname
+				read -e -p "请输入目录名: " dirname
 				cd "$dirname" 2>/dev/null || echo "無法進入目錄"
 				send_stats "進入目錄"
 				;;
@@ -13851,8 +13851,8 @@ linux_file() {
 					continue
 				fi
 
-				# 使用 -r 選項以遞歸方式複製目錄
-				cp -r "$src_path" "$dest_path" && echo "檔案或目錄已複製到$dest_path" || echo "複製檔案或目錄失敗"
+				# 使用 -r 选项以递归方式复制目录
+				cp -r "$src_path" "$dest_path" && echo "文件或目录已复制到 $dest_path" || echo "複製檔案或目錄失敗"
 				send_stats "複製檔案或目錄"
 				;;
 
@@ -14291,7 +14291,7 @@ send_stats "k指令參考用例"
 echo "-------------------"
 echo "影片介紹: https://www.bilibili.com/video/BV1ib421E7it?t=0.1"
 echo "以下是k命令參考用例："
-echo "啟動腳本 k"
+echo "启动脚本            k"
 echo "安裝軟體包 k install nano wget | k add nano wget | k 安裝 nano wget"
 echo "卸載軟體包 k remove nano wget | k del nano wget | k uninstall nano wget | k 卸載 nano wget"
 echo "更新系統 k update | k 更新"
