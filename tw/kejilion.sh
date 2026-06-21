@@ -761,7 +761,7 @@ install_crontab() {
 				;;
 		esac
 	else
-		echo "無法確定作業系統。"
+		echo "无法确定操作系统。"
 		return
 	fi
 
@@ -782,7 +782,7 @@ docker_ipv6_on() {
 		echo "$REQUIRED_IPV6_CONFIG" | jq . > "$CONFIG_FILE"
 		restart docker
 	else
-		# 使用jq處理設定檔的更新
+		# 使用jq处理配置文件的更新
 		local ORIGINAL_CONFIG=$(<"$CONFIG_FILE")
 
 		# 檢查目前配置是否已經有 ipv6 設定
@@ -812,7 +812,7 @@ docker_ipv6_off() {
 
 	local CONFIG_FILE="/etc/docker/daemon.json"
 
-	# 檢查設定檔是否存在
+	# 检查配置文件是否存在
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo -e "${gl_hong}設定檔不存在${gl_bai}"
 		return
@@ -872,7 +872,7 @@ iptables_open() {
 open_port() {
 	local ports=($@)  # 将传入的参数转换为数组
 	if [ ${#ports[@]} -eq 0 ]; then
-		echo "請提供至少一個連接埠號"
+		echo "请提供至少一个端口号"
 		return 1
 	fi
 
@@ -1121,7 +1121,7 @@ iptables_panel() {
 		  echo "1. 開放指定連接埠 2. 關閉指定連接埠"
 		  echo "3. 開放所有連接埠 4. 關閉所有連接埠"
 		  echo "------------------------"
-		  echo "5. IP白名單 6. IP黑名單"
+		  echo "5.  IP白名单                  	 6.  IP黑名单"
 		  echo "7. 清除指定IP"
 		  echo "------------------------"
 		  echo "11. 允許PING 12. 禁止PING"
@@ -1463,7 +1463,7 @@ install_ssltls_text() {
 
 
 add_ssl() {
-echo -e "${gl_huang}快速申請SSL證書，過期前自動續約${gl_bai}"
+echo -e "${gl_huang}快速申請SSL證書，過期前自動續簽${gl_bai}"
 yuming="${1:-}"
 if [ -z "$yuming" ]; then
 	add_yuming
@@ -1480,7 +1480,7 @@ ssl_ps
 
 ssl_ps() {
 	echo -e "${gl_huang}已申請的證書到期情況${gl_bai}"
-	echo "網站資訊 證書到期時間"
+	echo "站点信息                      证书到期时间"
 	echo "------------------------"
 	for cert_dir in /etc/letsencrypt/live/*; do
 	  local cert_file="$cert_dir/fullchain.pem"
@@ -1657,7 +1657,7 @@ cf_purge_cache() {
 	# 將 ZONE_IDS 轉換為數組
 	ZONE_IDS=($ZONE_IDS)
   else
-	# 提示使用者是否清理快取
+	# 提示用户是否清理缓存
 	read -e -p "需要清理 Cloudflare 的快取嗎？ （y/n）:" answer
 	if [[ "$answer" == "y" ]]; then
 	  echo "CF資訊保存在$CONFIG_FILE，可以後期修改CF訊息"
@@ -1735,7 +1735,7 @@ nginx_waf() {
 
 	# 根據 mode 參數決定開啟或關閉 WAF
 	if [ "$mode" == "on" ]; then
-		# 開啟 WAF：去掉註釋
+		# 开启 WAF：去掉注释
 		sed -i 's|# load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;|load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;|' /home/web/nginx.conf > /dev/null 2>&1
 		sed -i 's|^\(\s*\)# modsecurity on;|\1modsecurity on;|' /home/web/nginx.conf > /dev/null 2>&1
 		sed -i 's|^\(\s*\)# modsecurity_rules_file /etc/nginx/modsec/modsecurity.conf;|\1modsecurity_rules_file /etc/nginx/modsec/modsecurity.conf;|' /home/web/nginx.conf > /dev/null 2>&1
@@ -2107,7 +2107,7 @@ web_security() {
 					  sed -i "s/APIKEY00000/$cftoken/g" /etc/fail2ban/action.d/cloudflare-docker.conf
 					  f2b_status
 
-					  echo "已配置cloudflare模式，可在cf後台，站點-安全性-事件中查看攔截記錄"
+					  echo "已配置cloudflare模式，可在cf后台，站点-安全性-事件中查看拦截记录"
 					  ;;
 
 				  22)
@@ -2545,7 +2545,7 @@ clear_container_rules() {
 		iptables -D DOCKER-USER -p tcp -s "$allowed_ip" -d "$container_ip" -j ACCEPT
 	fi
 
-	# 清除放行本地網路 127.0.0.0/8 的規則
+	# 清除放行本地网络 127.0.0.0/8 的规则
 	if iptables -C DOCKER-USER -p tcp -s 127.0.0.0/8 -d "$container_ip" -j ACCEPT &>/dev/null; then
 		iptables -D DOCKER-USER -p tcp -s 127.0.0.0/8 -d "$container_ip" -j ACCEPT
 	fi
@@ -2661,7 +2661,7 @@ clear_host_port_rules() {
 		iptables -D INPUT -p tcp --dport "$port" -j DROP
 	fi
 
-	# 清除允許本機存取的規則
+	# 清除允许本机访问的规则
 	if iptables -C INPUT -p tcp --dport "$port" -s 127.0.0.0/8 -j ACCEPT &>/dev/null; then
 		iptables -D INPUT -p tcp --dport "$port" -s 127.0.0.0/8 -j ACCEPT
 	fi
@@ -3682,7 +3682,7 @@ remote_port = ${remote_port}
 EOF
 
 	# 輸出產生的信息
-	echo "服務$service_name已成功加入 frpc.toml"
+	echo "服務$service_name已成功加入到 frpc.toml"
 
 	docker restart frpc
 
@@ -3874,7 +3874,7 @@ frps_panel() {
 		echo "------------------------"
 		echo "7. 允許IP+連接埠存取 8. 阻止IP+連接埠訪問"
 		echo "------------------------"
-		echo "00. 刷新服務狀態 0. 返回上一級選單"
+		echo "00. 刷新服务状态         0. 返回上一级选单"
 		echo "------------------------"
 		read -e -p "輸入你的選擇:" choice
 		case $choice in
@@ -3884,7 +3884,7 @@ frps_panel() {
 				generate_frps_config
 
 				add_app_id
-				echo "FRP服務端已經安裝完成"
+				echo "FRP服务端已经安装完成"
 				;;
 			2)
 				crontab -l | grep -v 'frps' | crontab - > /dev/null 2>&1
@@ -3911,7 +3911,7 @@ frps_panel() {
 				echo "將內網穿透服務反代成域名訪問"
 				send_stats "FRP對外域名訪問"
 				add_yuming
-				read -e -p "請輸入你的內部網路穿透服務埠:" frps_port
+				read -e -p "请输入你的内网穿透服务端口: " frps_port
 				ldnmp_Proxy ${yuming} 127.0.0.1 ${frps_port}
 				block_host_port "$frps_port" "$ipv4_address"
 				;;
@@ -3928,7 +3928,7 @@ frps_panel() {
 
 			8)
 				send_stats "阻止IP訪問"
-				echo "如果你已經反代域名訪問了，可用此功能阻止IP+端口訪問，這樣更安全。"
+				echo "如果你已经反代域名访问了，可用此功能阻止IP+端口访问，这样更安全。"
 				read -e -p "請輸入需要阻止的連接埠:" frps_port
 				block_host_port "$frps_port" "$ipv4_address"
 				;;
@@ -3957,7 +3957,7 @@ frpc_panel() {
 		check_frp_app
 		check_docker_image_update $docker_name
 		echo -e "FRP客戶端$check_frp $update_status"
-		echo "與服務端對接，對接後可建立內網穿透服務到網際網路存取"
+		echo "与服务端对接，对接后可创建内网穿透服务到互联网访问"
 		echo "官網介紹: https://github.com/fatedier/frp/"
 		echo "影片教學: https://www.bilibili.com/video/BV1yMw6e2EwL?t=173.9"
 		echo "------------------------"
@@ -4056,7 +4056,7 @@ yt_menu_pro() {
 		echo "已下載影片清單:"
 		ls -td "$VIDEO_DIR"/*/ 2>/dev/null || echo "（暫無）"
 		echo "-------------------------"
-		echo "1. 安裝 2. 更新 3. 卸載"
+		echo "1.  安装               2.  更新               3.  卸载"
 		echo "-------------------------"
 		echo "5. 單一影片下載 6. 大量影片下載 7. 自訂參數下載"
 		echo "8. 下載為MP3音訊 9.刪除影片目錄 10. Cookie管理（開發中）"
@@ -4106,7 +4106,7 @@ yt_menu_pro() {
 				send_stats "大量影片下載"
 				install nano
 				if [ ! -f "$URL_FILE" ]; then
-				  echo -e "# 輸入多個視訊連結位址\n# https://www.bilibili.com/bangumi/play/ep733316?spm_id_from=333.337.0.0&from_spmid=666.25.episode.0" > "$URL_FILE"
+				  echo -e "# 输入多个视频链接地址\n# https://www.bilibili.com/bangumi/play/ep733316?spm_id_from=333.337.0.0&from_spmid=666.25.episode.0" > "$URL_FILE"
 				fi
 				nano $URL_FILE
 				echo "現在開始批量下載..."
@@ -4331,7 +4331,7 @@ while true; do
 	clear
 	echo "優化DNS位址"
 	echo "------------------------"
-	echo "目前DNS地址"
+	echo "当前DNS地址"
 	cat /etc/resolv.conf
 	echo "------------------------"
 	echo ""
@@ -4487,7 +4487,7 @@ import_sshkey() {
 
 	rm -rf /etc/ssh/sshd_config.d/* /etc/ssh/ssh_config.d/*
 	restart_ssh
-	echo -e "${gl_lv}公鑰已成功匯入，ROOT私鑰登入已開啟，已關閉ROOT密碼登錄，重連將會生效${gl_bai}"
+	echo -e "${gl_lv}公钥已成功导入，ROOT私钥登录已开启，已关闭ROOT密码登录，重连将会生效${gl_bai}"
 
 }
 
@@ -4502,7 +4502,7 @@ sed -i 's/^\s*#\?\s*PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_confi
 sed -i 's/^\s*#\?\s*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
 rm -rf /etc/ssh/sshd_config.d/* /etc/ssh/ssh_config.d/*
 restart_ssh
-echo -e "${gl_lv}ROOT登入設定完畢！${gl_bai}"
+echo -e "${gl_lv}ROOT登录设置完毕！${gl_bai}"
 
 }
 
@@ -4996,7 +4996,7 @@ elrepo_install() {
 		break_end
 		linux_Settings
 	fi
-	# 啟用 ELRepo 內核倉庫並安裝最新的主線內核
+	# 启用 ELRepo 内核仓库并安装最新的主线内核
 	echo "啟用 ELRepo 核心倉庫並安裝最新的主線核心..."
 	# yum -y --enablerepo=elrepo-kernel install kernel-ml
 	yum --nogpgcheck -y --enablerepo=elrepo-kernel install kernel-ml
@@ -5359,7 +5359,7 @@ Kernel_optimize() {
 	  echo "Linux系統核心參數優化"
 	  echo "影片介紹: https://www.bilibili.com/video/BV1Kb421J7yg?t=0.1"
 	  echo "------------------------------------------------"
-	  echo "提供多種系統參數調優模式，使用者可依自身使用場景進行選擇切換。"
+	  echo "提供多种系统参数调优模式，用户可以根据自身使用场景进行选择切换。"
 	  echo -e "${gl_huang}提示:${gl_bai}生產環境請謹慎使用！"
 	  echo "--------------------"
 	  echo "1. 高效能最佳化模式： 最大化系統效能，最佳化檔案描述符、虛擬記憶體、網路設定、快取管理和CPU設定。"
@@ -5815,7 +5815,7 @@ add_connection() {
 	echo "- 使用者名稱: root"
 	echo "- 連接埠: 22"
 	echo "------------------------"
-	read -e -p "請輸入連線名稱:" name
+	read -e -p "请输入连接名称: " name
 	read -e -p "請輸入IP位址:" ip
 	read -e -p "請輸入使用者名稱 (預設: root):" user
 	local user=${user:-root}  # 如果用户未输入，则使用默认值 root
@@ -5840,7 +5840,7 @@ add_connection() {
 				if [[ -z "$line" && "$password_or_key" == *"-----BEGIN"* ]]; then
 					break
 				fi
-				# 如果是第一行或已經開始輸入金鑰內容，則繼續新增
+				# 如果是第一行或已经开始输入密钥内容，则继续添加
 				if [[ -n "$line" || "$password_or_key" == *"-----BEGIN"* ]]; then
 					local password_or_key+="${line}"$'\n'
 				fi
@@ -5888,7 +5888,7 @@ delete_connection() {
 	echo "連線已刪除!"
 }
 
-# 使用連接
+# 使用连接
 use_connection() {
 	send_stats "使用連接"
 	read -e -p "請輸入要使用的連接編號:" num
@@ -5914,7 +5914,7 @@ use_connection() {
 	else
 		# 使用密碼連接
 		if ! command -v sshpass &> /dev/null; then
-			echo "錯誤：未安裝 sshpass，請先安裝 sshpass。"
+			echo "错误：未安装 sshpass，请先安装 sshpass。"
 			echo "安裝方法："
 			echo "  - Ubuntu/Debian: apt install sshpass"
 			echo "  - CentOS/RHEL: yum install sshpass"
@@ -6155,7 +6155,7 @@ list_tasks() {
 # 新增任務
 add_task() {
 	send_stats "新增同步任務"
-	echo "建立新同步任務範例："
+	echo "创建新同步任务示例："
 	echo "- 任務名稱: backup_www"
 	echo "- 本機目錄: /var/www"
 	echo "- 遠端位址: user@192.168.1.100"
@@ -6298,7 +6298,7 @@ run_task() {
 
 	if [[ "$auth_method" == "password" ]]; then
 		if ! command -v sshpass &> /dev/null; then
-			echo "錯誤：未安裝 sshpass，請先安裝 sshpass。"
+			echo "错误：未安装 sshpass，请先安装 sshpass。"
 			echo "安裝方法："
 			echo "  - Ubuntu/Debian: apt install sshpass"
 			echo "  - CentOS/RHEL: yum install sshpass"
@@ -6338,7 +6338,7 @@ schedule_task() {
 
 	read -e -p "請輸入要定時同步的任務編號:" num
 	if ! [[ "$num" =~ ^[0-9]+$ ]]; then
-		echo "錯誤: 請輸入有效的任務編號！"
+		echo "错误: 请输入有效的任务编号！"
 		return
 	fi
 
@@ -6857,7 +6857,7 @@ docker_ssh_migration() {
 	list_backups() {
 		local BACKUP_ROOT="/tmp"
 		echo -e "${BLUE}目前備份清單:${NC}"
-		ls -1dt ${BACKUP_ROOT}/docker_backup_* 2>/dev/null || echo "無備份"
+		ls -1dt ${BACKUP_ROOT}/docker_backup_* 2>/dev/null || echo "无备份"
 	}
 
 
@@ -6912,7 +6912,7 @@ docker_ssh_migration() {
 
 				# 如果該 Compose 項目已經打包過，跳過
 				if [[ -n "${PACKED_COMPOSE_PATHS[$project_dir]}" ]]; then
-					echo -e "${YELLOW}Compose 項目 [$project_name] 已備份過，跳過重複打包...${NC}"
+					echo -e "${YELLOW}Compose 項目 [$project_name] 已备份过，跳过重复打包...${NC}"
 					continue
 				fi
 
@@ -6983,7 +6983,7 @@ docker_ssh_migration() {
 		read -e -p  "請輸入要還原的備份目錄:" BACKUP_DIR
 		[[ ! -d "$BACKUP_DIR" ]] && { echo -e "${RED}備份目錄不存在${NC}"; return; }
 
-		echo -e "${BLUE}開始執行還原操作...${NC}"
+		echo -e "${BLUE}开始执行还原操作...${NC}"
 
 		install tar jq gzip
 		install_docker
@@ -8837,7 +8837,7 @@ while true; do
 	  echo -e "${gl_kjlan}39.  ${color39}Bililive直播錄影工具${gl_kjlan}40.  ${color40}webssh網頁版SSH連線工具"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}41.  ${color41}耗子管理面板${gl_kjlan}42.  ${color42}Nexterm遠端連線工具"
-	  echo -e "${gl_kjlan}43.  ${color43}RustDesk遠端桌面(服務端)${gl_huang}★${gl_bai}          ${gl_kjlan}44.  ${color44}RustDesk遠端桌面(中繼端)${gl_huang}★${gl_bai}"
+	  echo -e "${gl_kjlan}43.  ${color43}RustDesk远程桌面(服务端) ${gl_huang}★${gl_bai}          ${gl_kjlan}44.  ${color44}RustDesk遠端桌面(中繼端)${gl_huang}★${gl_bai}"
 	  echo -e "${gl_kjlan}45.  ${color45}Docker加速站${gl_kjlan}46.  ${color46}GitHub加速站${gl_huang}★${gl_bai}"
 	  echo -e "${gl_kjlan}47.  ${color47}普羅米修斯監控${gl_kjlan}48.  ${color48}普羅米修斯(主機監控)"
 	  echo -e "${gl_kjlan}49.  ${color49}普羅米修斯(容器監控)${gl_kjlan}50.  ${color50}補貨監控工具"
@@ -9076,7 +9076,7 @@ while true; do
 			check_docker_image_update $docker_name
 			clear
 			echo -e "哪吒監控$check_docker $update_status"
-			echo "開源、輕量、易用的伺服器監控與維運工具"
+			echo "开源、轻量、易用的服务器监控与运维工具"
 			echo "官網搭建文件: https://nezha.wiki/guide/dashboard.html"
 			if docker ps -a --format '{{.Names}}' 2>/dev/null | grep -q "$docker_name"; then
 				local docker_port=$(docker port $docker_name | awk -F'[:]' '/->/ {print $NF}' | uniq)
@@ -9565,7 +9565,7 @@ while true; do
 			check_docker_app
 			clear
 			echo -e "雷池服務$check_docker"
-			echo "雷池是長亭科技開發的WAF站點防火牆程式面板，可反代站點進行自動化防禦"
+			echo "雷池是长亭科技开发的WAF站点防火墙程序面板，可以反代站点进行自动化防御"
 			echo "影片介紹: https://www.bilibili.com/video/BV1mZ421T74c?t=0.1"
 			if docker ps -a --format '{{.Names}}' 2>/dev/null | grep -q "$docker_name"; then
 				check_docker_app_ip
@@ -12302,7 +12302,7 @@ linux_work() {
 	  echo -e "即使你斷開SSH，工作區的任務也不會中斷，後台常駐任務。"
 	  echo -e "${gl_huang}提示:${gl_bai}進入工作區後再使用Ctrl+b再單獨按d，退出工作區！"
 	  echo -e "${gl_kjlan}------------------------"
-	  echo "目前已存在的工作區列表"
+	  echo "当前已存在的工作区列表"
 	  echo -e "${gl_kjlan}------------------------"
 	  tmux list-sessions
 	  echo -e "${gl_kjlan}------------------------"
@@ -12320,7 +12320,7 @@ linux_work() {
 	  echo -e "${gl_kjlan}21.  ${gl_bai}SSH常駐模式${gl_huang}★${gl_bai}"
 	  echo -e "${gl_kjlan}22.  ${gl_bai}創建/進入工作區"
 	  echo -e "${gl_kjlan}23.  ${gl_bai}注入指令到後台工作區"
-	  echo -e "${gl_kjlan}24.  ${gl_bai}刪除指定工作區"
+	  echo -e "${gl_kjlan}24.  ${gl_bai}删除指定工作区"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}0.   ${gl_bai}返回主選單"
 	  echo -e "${gl_kjlan}------------------------${gl_bai}"
@@ -12410,7 +12410,7 @@ linux_work() {
 			  fi
 			  send_stats "SSH常駐模式"
 			  echo -e "SSH常駐模式${tmux_sshd_status}"
-			  echo "開啟後SSH連線後會直接進入常駐模式，直接回到先前的工作狀態。"
+			  echo "开启后SSH连接后会直接进入常驻模式，直接回到之前的工作状态。"
 			  echo "------------------------"
 			  echo "1. 開啟 2. 關閉"
 			  echo "------------------------"
@@ -12503,7 +12503,7 @@ linux_Settings() {
 	  echo -e "${gl_kjlan}21.  ${gl_bai}本機host解析${gl_kjlan}22.  ${gl_bai}SSH防禦程序"
 	  echo -e "${gl_kjlan}23.  ${gl_bai}限流自動關機${gl_kjlan}24.  ${gl_bai}ROOT私鑰登入模式"
 	  echo -e "${gl_kjlan}25.  ${gl_bai}TG-bot系統監控預警${gl_kjlan}26.  ${gl_bai}修復OpenSSH高風險漏洞"
-	  echo -e "${gl_kjlan}27.  ${gl_bai}紅帽系Linux核心升級${gl_kjlan}28.  ${gl_bai}Linux系統核心參數優化${gl_huang}★${gl_bai}"
+	  echo -e "${gl_kjlan}27.  ${gl_bai}红帽系Linux内核升级                ${gl_kjlan}28.  ${gl_bai}Linux系統核心參數優化${gl_huang}★${gl_bai}"
 	  echo -e "${gl_kjlan}29.  ${gl_bai}病毒掃描工具${gl_huang}★${gl_bai}                     ${gl_kjlan}30.  ${gl_bai}文件管理器"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}31.  ${gl_bai}切換系統語言${gl_kjlan}32.  ${gl_bai}命令列美化工具${gl_huang}★${gl_bai}"
@@ -12668,7 +12668,7 @@ EOF
 						send_stats "SSH連接埠已修改"
 						new_ssh_port
 					elif [[ $new_port -eq 0 ]]; then
-						send_stats "退出SSH埠修改"
+						send_stats "退出SSH連接埠修改"
 						break
 					else
 						echo "連接埠號碼無效，請輸入1到65535之間的數字。"
@@ -12973,7 +12973,7 @@ EOF
 				echo "時區切換"
 				echo "------------------------"
 				echo "亞洲"
-				echo "1. 中國上海時間 2. 中國香港時間"
+				echo "1.  中国上海时间             2.  中国香港时间"
 				echo "3. 日本東京時間 4. 韓國首爾時間"
 				echo "5. 新加坡時間 6. 印度加爾各答時間"
 				echo "7. 阿聯酋杜拜時間 8. 澳洲雪梨時間"
@@ -13072,7 +13072,7 @@ EOF
 				  send_stats "主機名稱已更改"
 				  sleep 1
 			  else
-				  echo "已退出，未更改主機名稱。"
+				  echo "已退出，未更改主机名。"
 				  break
 			  fi
 		  done
@@ -13140,7 +13140,7 @@ EOF
 
 						  case $dingshi in
 							  1)
-								  read -e -p "選擇每月的幾號執行任務？ (1-30):" day
+								  read -e -p "选择每月的几号执行任务？ (1-30): " day
 								  (crontab -l ; echo "0 0 $day * * $newquest") | crontab - > /dev/null 2>&1
 								  ;;
 							  2)
@@ -13395,7 +13395,7 @@ EOF
 			  echo "TG-bot監控預警功能"
 			  echo "影片介紹: https://youtu.be/vLL-eb3Z_TY"
 			  echo "------------------------------------------------"
-			  echo "您需要設定tg機器人API和接收預警的用戶ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
+			  echo "您需要設定tg機器人API和接收預警的使用者ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
 			  echo "到達閾值後會向用戶發送預警訊息"
 			  echo -e "${gl_hui}-關於流量，重啟伺服器將重新計算-${gl_bai}"
 			  read -e -p "確定繼續嗎？ (Y/N):" choice
@@ -13810,9 +13810,9 @@ linux_file() {
 				send_stats "壓縮檔案/目錄"
 				;;
 			22) # 解压文件/目录
-				read -e -p "請輸入要解壓縮的檔名 (.tar.gz):" filename
+				read -e -p "請輸入要解壓縮的檔案名稱 (.tar.gz):" filename
 				install tar
-				tar -xzvf "$filename" && echo "已解壓縮$filename" || echo "解壓縮失敗"
+				tar -xzvf "$filename" && echo "已解压 $filename" || echo "解壓縮失敗"
 				send_stats "解壓縮檔案/目錄"
 				;;
 
@@ -14059,7 +14059,7 @@ while true; do
 
 		  51)
 			  send_stats "自訂執行命令"
-			  read -e -p "請輸入批次執行的命令:" mingling
+			  read -e -p "请输入批量执行的命令: " mingling
 			  run_commands_on_servers "${mingling}"
 			  ;;
 
@@ -14159,7 +14159,7 @@ while true; do
 	fi
 
 	echo "------------------------"
-	echo "1. 現在更新 2. 開啟自動更新 3. 關閉自動更新"
+	echo "1. 现在更新            2. 开启自动更新            3. 关闭自动更新"
 	echo "------------------------"
 	echo "0. 返回主選單"
 	echo "------------------------"
@@ -14177,7 +14177,7 @@ while true; do
 			CheckFirstRun_true
 			yinsiyuanquan2
 			cp -f ~/kejilion.sh /usr/local/bin/k > /dev/null 2>&1
-			echo -e "${gl_lv}腳本已更新到最新版本！${gl_huang}v$sh_v_new${gl_bai}"
+			echo -e "${gl_lv}脚本已更新到最新版本！${gl_huang}v$sh_v_new${gl_bai}"
 			send_stats "腳本已經最新$sh_v_new"
 			break_end
 			~/kejilion.sh

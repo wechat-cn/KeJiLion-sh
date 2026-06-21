@@ -2439,16 +2439,16 @@ check_docker_image_update() {
 	# Add support for official images
 	[[ "$image_repo" != */* ]] && image_repo="library/$image_repo"
 
-	# Get image release time from Docker Hub API
+	# 从 Docker Hub API 获取镜像发布时间
 	local hub_info=$(curl -s "https://hub.docker.com/v2/repositories/$image_repo/tags/$image_tag")
 	local last_updated=$(echo "$hub_info" | jq -r '.last_updated' 2>/dev/null)
 
-	# Verify the time obtained
+	# 验证获取的时间
 	if [[ -n "$last_updated" && "$last_updated" != "null" ]]; then
 		local container_created_ts=$(date -d "$container_created" +%s 2>/dev/null)
 		local last_updated_ts=$(date -d "$last_updated" +%s 2>/dev/null)
 
-		# Compare timestamps
+		# 比较时间戳
 		if [[ $container_created_ts -lt $last_updated_ts ]]; then
 			update_status="${gl_huang}发现新版本!${gl_bai}"
 		else
@@ -2477,7 +2477,7 @@ block_container_port() {
 	install iptables
 
 
-	# Check and block all other IPs
+	# 检查并封禁其他所有 IP
 	if ! iptables -C DOCKER-USER -p tcp -d "$container_ip" -j DROP &>/dev/null; then
 		iptables -I DOCKER-USER -p tcp -d "$container_ip" -j DROP
 	fi
@@ -2800,7 +2800,7 @@ while true; do
 			rm -f /home/docker/${docker_name}_port.conf
 
 			sed -i "/\b${app_id}\b/d" /home/docker/appno.txt
-			echo "App has been uninstalled"
+			echo "应用已卸载"
 			send_stats "uninstall$docker_name"
 			;;
 
@@ -4502,7 +4502,7 @@ sed -i 's/^\s*#\?\s*PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_confi
 sed -i 's/^\s*#\?\s*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
 rm -rf /etc/ssh/sshd_config.d/* /etc/ssh/ssh_config.d/*
 restart_ssh
-echo -e "${gl_lv}ROOT login setup is completed!${gl_bai}"
+echo -e "${gl_lv}ROOT login setup is complete!${gl_bai}"
 
 }
 
@@ -5168,7 +5168,7 @@ clamav() {
 						;;
 					3)
 					  send_stats "Custom directory scan"
-					  read -e -p "Please enter the directories to scan, separated by spaces (for example: /etc /var /usr /home /root):" directories
+					  read -e -p "Please enter the directories to be scanned, separated by spaces (for example: /etc /var /usr /home /root):" directories
 					  install_docker
 					  clamav_freshclam
 					  clamav_scan $directories
@@ -5311,7 +5311,7 @@ restore_defaults() {
 
 # Website building optimization function
 optimize_web_server() {
-	echo -e "${gl_lv}Switch to website construction optimization mode...${gl_bai}"
+	echo -e "${gl_lv}Switch to website building optimization mode...${gl_bai}"
 
 	echo -e "${gl_lv}Optimize file descriptors...${gl_bai}"
 	ulimit -n 65535
@@ -6325,7 +6325,7 @@ run_task() {
 	else
 		echo "Sync failed! Please check the following:"
 		echo "1. Is the network connection normal?"
-		echo "2. Whether the remote host is accessible"
+		echo "2. Is the remote host accessible?"
 		echo "3. Is the authentication information correct?"
 		echo "4. Do the local and remote directories have correct access permissions?"
 	fi
@@ -8814,7 +8814,7 @@ while true; do
 
 	  echo -e "${gl_kjlan}1.   ${color1}Pagoda panel official version${gl_kjlan}2.   ${color2}aaPanel Pagoda International Version"
 	  echo -e "${gl_kjlan}3.   ${color3}1Panel new generation management panel${gl_kjlan}4.   ${color4}NginxProxyManager visualization panel"
-	  echo -e "${gl_kjlan}5.   ${color5}OpenList multi-store file list program${gl_kjlan}6.   ${color6}Ubuntu Remote Desktop Web Edition"
+	  echo -e "${gl_kjlan}5.   ${color5}OpenList multi-store file list program${gl_kjlan}6.   ${color6}Ubuntu Remote Desktop Web Version"
 	  echo -e "${gl_kjlan}7.   ${color7}Nezha Probe VPS Monitoring Panel${gl_kjlan}8.   ${color8}QB offline BT magnetic download panel"
 	  echo -e "${gl_kjlan}9.   ${color9}Poste.io mail server program${gl_kjlan}10.  ${color10}RocketChat multi-person online chat system"
 	  echo -e "${gl_kjlan}------------------------"
